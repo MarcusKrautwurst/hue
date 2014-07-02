@@ -22,6 +22,9 @@ class Bridge(object):
         pass
 
     def createuser(self, user, description="python_api"):
+        """
+        Attempts to create a new user
+        """
         userexist = None
         success = False
 
@@ -51,6 +54,8 @@ class Bridge(object):
                 except KeyError:
                     print 'There was an error creating this user'
                     success = False
+        else:
+            print "The user already exists"
 
         return success
 
@@ -74,6 +79,9 @@ class Bridge(object):
             return False
 
     def set_manual(self,ip):
+        """
+        Let's you manually define the bridge ip
+        """
         self.ip = ip
         self.adress = "http://%s"%ip
 
