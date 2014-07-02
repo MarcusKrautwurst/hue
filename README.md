@@ -1,3 +1,5 @@
+How to use this Python API for Phillips hue
+
 # Create an instance of your bridge
 mybridge = Bridge()
 
