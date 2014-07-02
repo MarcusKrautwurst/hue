@@ -35,7 +35,7 @@ class Bridge(object):
             userexist = True
 
         # If the user doesnt exist, we create him here
-        if userexist:
+        if not userexist:
             dataToJson = json.dumps({"devicetype":description,"username":user})
             opener = urllib2.build_opener(urllib2.HTTPHandler)
             request = urllib2.Request('%s/api'%self.adress, data=dataToJson)
