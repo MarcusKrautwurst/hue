@@ -1,9 +1,8 @@
-hue
+Phillips Hue Python API
 ===
 
-Phillips Hue Python API
-HOW TO USE 
 
+HOW TO USE 
 
 Create an instance of your bridge
 mybridge = Bridge()
@@ -12,7 +11,7 @@ Attempt to find your bridge
 mybridge.findbridge()
 
 If no bridge is found, we can alternatively do this
-#mybridge.set_manual("192.168.0.50")
+mybridge.set_manual("192.168.0.50")
 
 If we already have a user on the bridge, we set it like this
 mybridge.user = "newdeveloper"
