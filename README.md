@@ -1,5 +1,3 @@
-How to use this API
-
 # Create an instance of your bridge
 mybridge = Bridge()
 
