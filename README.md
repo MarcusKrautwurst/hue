@@ -1,4 +1,4 @@
-Philips Hue Python API
+Phillips Hue Python API
 ===
 
 
