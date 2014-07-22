@@ -501,3 +501,5 @@ class Schedules(list):
 # # Show the bridges schedules and you see its now added
 # myschedules = mybridge.getschedules()
 # print myschedules
+
+print "TEST"
