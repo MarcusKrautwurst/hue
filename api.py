@@ -1,3 +1,4 @@
+# coding=utf-8
 __author__ = "marcus.krautwurst"
 __version__ = 0.1
 
@@ -108,6 +109,9 @@ class Bridge(object):
             return False
 
     def getschedules(self):
+        """
+        Receives all schedules from the bridge and populates them into self.schedules
+        """
         if self.user != None:
             self.schedules = Schedules(self)
             schedules = self.request('%s/api/%s/schedules' % (self.adress, self.user), 'GET')
@@ -128,13 +132,12 @@ class Bridge(object):
             print "No valid user, please create one or use an existing one"
             return False
 
-
     def request(self, url, method, data=None):
         """
         Sends a request to the bridge
         url: the url that's being added to the base url
-        data: usually a dictionary
         method: GET, POST, PUT
+        data: A dictionary (for GET its not needed)
         """
         if isinstance(data, dict) and method is not 'GET':
             data = json.dumps(data)
@@ -165,6 +168,24 @@ class Bridge(object):
         return content
 
     def getconfig(self):
+        """
+        Returns a dictionary with all system settings of your bridge, you can also access them individually like this:
+
+        proxyport	uint16	Port of the proxy being used by the bridge. If set to 0 then a proxy is not being used.
+        UTC	string	Current time stored on the bridge.
+        name	string 4..16	Name of the bridge. This is also its uPnP name, so will reflect the actual uPnP name after any conflicts have been resolved.
+        swupdate	object	Contains information related to software updates.
+        whitelist	object	An array of whitelisted user IDs.
+        swversion	string	Software version of the bridge.
+        proxyaddress	string 0..40	IP Address of the proxy server being used. A value of “none” indicates no proxy.
+        mac	string	MAC address of the bridge.
+        linkbutton	bool	Indicates whether the link button has been pressed within the last 30 seconds.
+        ipaddress	string	IP address of the bridge.
+        netmask	string	Network mask of the bridge.
+        gateway	string	Gateway IP address of the bridge.
+        dhcp	bool	Whether the IP address of the bridge is obtained with DHCP.
+        portalservices	bool	This indicates whether the bridge is registered to synchronize data with a portal account.
+        """
         return mybridge.request("%s/api/%s/config" % (mybridge.adress,mybridge.user),'GET')
 
 
