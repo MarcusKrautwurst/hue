@@ -502,4 +502,4 @@ class Schedules(list):
 # myschedules = mybridge.getschedules()
 # print myschedules
 
-print "TEST"
+print "TEST123"
