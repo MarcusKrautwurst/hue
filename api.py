@@ -121,16 +121,27 @@ class Bridge(object):
                         myschedule = schedules[str(each+1)]
                         newschedule = Schedule(myschedule["name"],myschedule["time"][0:9],myschedule["time"][10:-1])
                         newschedule.command = myschedule["command"]
+                        newschedule.id = schedules[each]
 
                         self.schedules.append(newschedule)
                     except KeyError:
                         print "Error receiving schedules from the bridge"
                         pass
             else:
-                return False
+                return None
         else:
             print "No valid user, please create one or use an existing one"
             return False
+
+    def getgroups(self):
+        """
+        This will get all our groups
+        """
+        if self.user != None:
+            self.groups = Groups(self)
+
+        mygroups = self.request('%s/api/%s/groups' % (self.adress, self.user), 'GET')
+        print mygroups
 
     def request(self, url, method, data=None):
         """
@@ -193,14 +204,25 @@ class Group(object):
     """
     This is a group of lights
     """
-    #@TODO: Implement groups
     name = None
     id = None
     lights = []
-    lastcommand = None
+    action = None
 
     def __init__(self):
         pass
+
+class Groups(list):
+    """
+    This list holds groups on the bridge
+    """
+    def __init__(self):
+        self.bridge = bridge
+        super(self.__class__, self).__init__()
+
+    def add(self, item):
+        return self.bridge.request("groups", "POST", item.toJson())
+        super(self.__class__, self).append(item)
 
 
 class Light(object):
@@ -428,7 +450,7 @@ class Schedule(object):
     This is a schedule, when created pass it the name as a string and the time as 2nd argument,
     like this date='2007-03-04'time='21:08:12'
     If the date is in the past, an error will be returned, to make sure you have the correct timezone, you can display the bridge's time setting like this:
-    bridge.getconfig()["localtime]
+    bridge.getconfig()["localtime"]
     """
     id = None
     _command = None
@@ -472,13 +494,15 @@ class Schedules(list):
         super(self.__class__, self).append(item)
 
 
-# mybridge = Bridge()
-# mybridge.findbridge()
-# mybridge.user = "newdeveloper"
-# mybridge.getlights()
-#
-# # With this function we receive all the schedules from the bridge
-# mybridge.getschedules()
+mybridge = Bridge()
+mybridge.findbridge()
+mybridge.user = "newdeveloper"
+
+# With this function we receive all lights from the bridge
+mybridge.getlights()
+
+# With this function we receive all the schedules from the bridge
+mybridge.getschedules()
 
 # Now we can cycle through all schedules like this
 # for each in mybridge.schedules:
@@ -501,5 +525,3 @@ class Schedules(list):
 # # Show the bridges schedules and you see its now added
 # myschedules = mybridge.getschedules()
 # print myschedules
-
-print "TEST123"
